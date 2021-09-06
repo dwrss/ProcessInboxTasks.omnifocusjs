@@ -11,7 +11,7 @@
     "image": "tray"
 }*/
 (() => {
-    var action = new PlugIn.Action(function(selection: Selection, sender){
+    var action = new PlugIn.Action(function(selection, sender){
     	const database = selection.database
 		const flattenedProjects = selection.database.flattenedProjects
 		let shoppingProject = flattenedProjects.byName("🛍 Shopping");
