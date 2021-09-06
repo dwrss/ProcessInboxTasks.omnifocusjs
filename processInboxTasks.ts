@@ -16,10 +16,8 @@
 		const flattenedProjects = selection.database.flattenedProjects
 		let shoppingProject = flattenedProjects.byName("🛍 Shopping");
 		let groceriesProject = flattenedProjects.byName("🛒 Grocery Shopping");
-		let errandsProject = flattenedProjects.byName("⛳️ Errands");
 		
 		selection.window.perspective = Perspective.BuiltIn.Inbox;
-		let supermarketTag = database.tagsMatching('🛒 Supermarket')[0];
 		selection.database.inbox.forEach(function(task){
 			if (task.name.startsWith("Waiting")) {
 				let waitingTag = database.tagsMatching("Waiting")[0];
