@@ -25,8 +25,16 @@
 			}
 			
 			if (task.name.startsWith('--')) {
-				let newTask = Task.byParsingTransportText(task.name, null);
-				newTask.note = task.note;
+				let newTasks = Task.byParsingTransportText(task.name, null);
+				if (task.note && task.note.startsWith('--')) {
+					// The note looks like Taskpaper, so parse it as such
+					let noteTask = Task.byParsingTransportText(task.note, null);
+				} else {
+					// We don't know which task the note is associated with, so add to all
+					newTasks.forEach(newTask => {
+						newTask.note = task.note;
+					});
+				}
 				deleteObject(task);
 			} else if (task.name.toLowerCase().includes('#checkredditpost')) {
 				task.name = task.name.replace("#checkredditpost", "");
