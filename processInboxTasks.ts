@@ -170,6 +170,17 @@
 				task.addTags([cbTag, usaTag]);
 				task.appendStringToNote("\n\nJunior Medium");
 				moveTasks([task], shoppingProject);
+			} else if (task.note.includes("youtube.com") || task.note.includes("youtu.be")) {
+				let watchTag = tagsMatching("📺 Watch")[0];
+				task.addTag(watchTag);
+				let taskName = task.name;
+				if (taskName.length > 1 
+					& !task.project
+					&& !(taskName.includes("youtube.com") || taskName.includes("youtu.be"))
+				) {
+					let youtubeProject = flattenedProjects.byName("📺 YouTube");
+					moveTasks([task], youtubeProject);
+				}
 			}
 			while (task.name.includes("  ")) {
 				task.name = task.name.replace("  ", " ")
