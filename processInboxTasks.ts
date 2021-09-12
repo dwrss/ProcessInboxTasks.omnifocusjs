@@ -182,12 +182,22 @@
 				let watchTag = tagsMatching("📺 Watch")[0];
 				task.addTag(watchTag);
 				let taskName = task.name;
-				if (taskName.length > 1 
-					&& !task.project
+				if (shouldMoveToProject(task)
 					&& !(taskName.includes("youtube.com") || taskName.includes("youtu.be"))
 				) {
 					let youtubeProject = flattenedProjects.byName("📺 YouTube");
 					moveTasks([task], youtubeProject);
+				}
+			} else if (task.note.includes("wikipedia.org")) {
+				const readingTag = tagsMatching("🔖 Reading")[0];
+				const onlineTag = tagsMatching("online")[0];
+				task.addTags([readingTag, onlineTag]);
+				let taskName = task.name;
+				if (shouldMoveToProject(task)
+					&& !(taskName.includes("wikipedia.org"))
+				) {
+					let readingProject = flattenedProjects.byName("🔖 Reading");
+					moveTasks([task], readingProject);
 				}
 			}
 			try {
@@ -212,3 +222,7 @@
         
     return action;
 })();
+
+function shouldMoveToProject(task) {
+	return task.name.length > 1 && !task.project
+}
