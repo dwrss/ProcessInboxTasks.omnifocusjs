@@ -190,10 +190,17 @@
 					moveTasks([task], youtubeProject);
 				}
 			}
-			while (task.name.includes("  ")) {
-				task.name = task.name.replace("  ", " ")
+			try {
+				while (task.name.includes("  ")) {
+					task.name = task.name.replace("  ", " ");
+				}
+				task.name = task.name.trim();
+			} catch (error) {
+				if (error.message.includes("invalid instance of Task")) {
+					return;
+				}
+				throw error;
 			}
-			task.name = task.name.trim();
 		});
 	});
 
