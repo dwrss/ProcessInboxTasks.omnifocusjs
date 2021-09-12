@@ -175,7 +175,7 @@
 				task.addTag(watchTag);
 				let taskName = task.name;
 				if (taskName.length > 1 
-					& !task.project
+					&& !task.project
 					&& !(taskName.includes("youtube.com") || taskName.includes("youtu.be"))
 				) {
 					let youtubeProject = flattenedProjects.byName("📺 YouTube");
