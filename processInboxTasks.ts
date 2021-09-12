@@ -101,10 +101,15 @@
 				task.addTag(superdrugTag);
 				moveTasks([task], shoppingProject);
 			} else if (task.note.includes("apple.com")) {
-				task.name = task.name.replace("- Apple (UK)", "");
-				let appleTag = tagsMatching("Apple")[0];
-				task.addTag(appleTag);
-				moveTasks([task], shoppingProject);
+				if (task.note.includes("apps.apple.com")) {
+					let onlineTag = tagsMatching("online")[0];
+					task.addTag(onlineTag);
+				} else {
+					task.name = task.name.replace("- Apple (UK)", "");
+					let appleTag = tagsMatching("Apple")[0];
+					task.addTag(appleTag);
+					moveTasks([task], shoppingProject);
+				}
 			} else if ((task.note.includes("thingiverse.com") || task.note.includes("prusaprinters.org")) && !task.tags.length) {
 				if (task.note.includes("thingiverse.com"))
 					task.name = task.name.replace("- Thingiverse", "");
