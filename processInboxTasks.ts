@@ -38,86 +38,86 @@
 						newTask.note = task.note;
 					});
 				}
-				deleteObject(task);
+				database.deleteObject(task);
 			} else if (task.name.toLowerCase().includes('#checkredditpost')) {
 				task.name = task.name.replace("#checkredditpost", "");
 				task.addTag(readingTag);
-				moveTasks([task], readingProject);
+				database.moveTasks([task], readingProject);
 			} else if (task.name.includes("- IKEA") && task.note.includes("https://www.ikea.com")) {
-				let ikeaTag = tagsMatching('Ikea')[0];
+				let ikeaTag = database.tagsMatching('Ikea')[0];
 				task.name = task.name.replace("- IKEA", "");
 				task.addTag(ikeaTag);
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.name.includes("| Wilko") && task.note.includes("https://www.wilko.com")) {
-				let wilkoTag = tagsMatching('Wilko')[0];
+				let wilkoTag = database.tagsMatching('Wilko')[0];
 				task.name = task.name.replace("| Wilko", "").replace("Wilko", "");
 				task.addTag(wilkoTag);
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.name.includes("| Argos") && task.note.includes("https://www.argos.co.uk")) {
-				let argosTag = tagsMatching('Argos')[0];
+				let argosTag = database.tagsMatching('Argos')[0];
 				task.name = task.name.replace("| Argos", "").replace("Buy", "");
 				task.addTag(argosTag);
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.name.includes("- B&M") || task.note.includes("https://www.bmstores.co.uk")) {
-				let bmTag = tagsMatching('B&M')[0];
+				let bmTag = database.tagsMatching('B&M')[0];
 				task.name = task.name.replace("- B&M", "");
 				task.addTag(bmTag);
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.name.includes("| Morrisons") && task.note.includes("morrisons.com")) {
-				let morrisonsTag = tagsMatching("Morrison's")[0];
+				let morrisonsTag = database.tagsMatching("Morrison's")[0];
 				task.name = task.name.replace("| Morrisons", "");
 				task.addTag(morrisonsTag);
-				moveTasks([task], groceriesProject);
+				database.moveTasks([task], groceriesProject);
 			} else if (task.note.includes("aldi.co.uk")) {
-				let aldiTag = tagsMatching("Aldi")[0];
+				let aldiTag = database.tagsMatching("Aldi")[0];
 				task.name = task.name.replace("- ALDI UK", "");
 				task.name = task.name.replace("| ALDI", "");
 				task.addTag(aldiTag);
-				moveTasks([task], groceriesProject);
+				database.moveTasks([task], groceriesProject);
 			} else if (task.note.includes("lidl.co.uk")) {
-				let lidlTag = tagsMatching("Lidl")[0];
+				let lidlTag = database.tagsMatching("Lidl")[0];
 				task.name = task.name.replace("- www.lidl.co.uk", "");
 				task.name = task.name.replace("- at Lidl UK", "");
 				task.addTag(lidlTag);
-				moveTasks([task], groceriesProject);
+				database.moveTasks([task], groceriesProject);
 			} else if (task.name.includes("ASDA Groceries") && task.note.includes("asda.com")) {
-				let asdaTag = tagsMatching("Asda")[0];
+				let asdaTag = database.tagsMatching("Asda")[0];
 				task.name = task.name.replace("- ASDA Groceries", "");
 				task.addTag(asdaTag);
-				moveTasks([task], groceriesProject);
+				database.moveTasks([task], groceriesProject);
 			} else if (task.name.includes("Primark") && task.note.includes("primark.com")) {
-				let primarkTag = tagsMatching("Primark")[0];
+				let primarkTag = database.tagsMatching("Primark")[0];
 				task.name = task.name.split("|").slice(0).join("");
 				task.addTag(primarkTag);
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.note.includes("poundland.co.uk")) {
-				let poundlandTag = tagsMatching("Poundland")[0];
+				let poundlandTag = database.tagsMatching("Poundland")[0];
 				task.addTag(poundlandTag);
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.note.includes("diy.com")) {
 				task.name = task.name.split("|").slice(0).join("");
-				let bqTag = tagsMatching("B&Q")[0];
+				let bqTag = database.tagsMatching("B&Q")[0];
 				task.addTag(bqTag);
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.note.includes("shop.pimoroni.com")) {
 				task.name = task.name.replace("– Pimoroni", "");
-				let piTag = tagsMatching("Pimoroni")[0];
+				let piTag = database.tagsMatching("Pimoroni")[0];
 				task.addTag(piTag);
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.note.includes("superdrug.com")) {
 				task.name = task.name.split("|").slice(0).join("");
-				let superdrugTag = tagsMatching("Superdrug")[0];
+				let superdrugTag = database.tagsMatching("Superdrug")[0];
 				task.addTag(superdrugTag);
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.note.includes("apple.com")) {
 				if (task.note.includes("apps.apple.com")) {
-					let onlineTag = tagsMatching("online")[0];
+					let onlineTag = database.tagsMatching("online")[0];
 					task.addTag(onlineTag);
 				} else {
 					task.name = task.name.replace("- Apple (UK)", "");
-					let appleTag = tagsMatching("Apple")[0];
+					let appleTag = database.tagsMatching("Apple")[0];
 					task.addTag(appleTag);
-					moveTasks([task], shoppingProject);
+					database.moveTasks([task], shoppingProject);
 				}
 			} else if ((task.note.includes("thingiverse.com") || task.note.includes("prusaprinters.org")) && !task.tags.length) {
 				if (task.note.includes("thingiverse.com"))
@@ -141,54 +141,54 @@
 					newTask.note = task.note;
 					childTasks.push(newTask);
 				});
-				moveTasks(childTasks, task);
+				database.moveTasks(childTasks, task);
 			} else if (task.note.includes("shoezone.com")) {
 				task.name = task.name.split("|").slice(0).join("");
 				task.name = task.name.replace("Shoe Zone", "");
-				let shoezoneTag = tagsMatching("Shoe Zone")[0];
+				let shoezoneTag = database.tagsMatching("Shoe Zone")[0];
 				task.addTag(shoezoneTag);
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.note.includes("sainsburys.co.uk")) {
 				task.name = task.name.split("|").slice(0).join("");
-				let sainsburyTag = tagsMatching("Sainsbury’s")[0];
+				let sainsburyTag = database.tagsMatching("Sainsbury’s")[0];
 				task.addTag(sainsburyTag);
 				if (task.note.includes("tuclothing.sainsburys.co.uk")) {
-					moveTasks([task], shoppingProject);
+					database.moveTasks([task], shoppingProject);
 				} else {
-					moveTasks([task], groceriesProject);
+					database.moveTasks([task], groceriesProject);
 				}
 			} else if (task.note.includes("tesco.com")) {
 				task.name = task.name.replace("- Tesco Groceries", "");
-				let tescoTag = tagsMatching("Tesco")[0];
+				let tescoTag = database.tagsMatching("Tesco")[0];
 				task.addTag(tescoTag);
-				moveTasks([task], groceriesProject);
+				database.moveTasks([task], groceriesProject);
 			} else if (task.note.includes("theworks.co.uk")) {
 				task.name = task.name.split("|").slice(0).join("");
-				let worksTag = tagsMatching("The Works")[0];
+				let worksTag = database.tagsMatching("The Works")[0];
 				task.addTag(worksTag);
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.note.includes("theworks.co.uk")) {
 				task.name = task.name.split("|").slice(0).join("");
-				let worksTag = tagsMatching("The Works")[0];
+				let worksTag = database.tagsMatching("The Works")[0];
 				task.addTag(worksTag);
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.note.includes("cottonbureau.com")) {
 				task.name = task.name.split("|").slice(0).join("").replace("“", '"').replace("”", '"');
-				let cbTag = tagsMatching("Cotton Bureau")[0];
-				let usaTag = tagsMatching("🇺🇸 USA")[0];
+				let cbTag = database.tagsMatching("Cotton Bureau")[0];
+				let usaTag = database.tagsMatching("🇺🇸 USA")[0];
 				task.addTags([cbTag, usaTag]);
 				task.appendStringToNote("\n\nJunior Medium");
-				moveTasks([task], shoppingProject);
+				database.moveTasks([task], shoppingProject);
 			} else if (task.note.includes("youtube.com") || task.note.includes("youtu.be")) {
-				let watchTag = tagsMatching("📺 Watch")[0];
+				let watchTag = database.tagsMatching("📺 Watch")[0];
 				task.addTag(watchTag);
 				moveIfTitled(task, ["youtube.com", "youtu.be"], "📺 YouTube");
 			} else if (task.note.includes("wikipedia.org")) {
-				const onlineTag = tagsMatching("online")[0];
+				const onlineTag = database.tagsMatching("online")[0];
 				task.addTags([readingTag, onlineTag]);
 				moveIfTitled(task, ["wikipedia.org"], readingProject);
 			} else if (task.note.includes("tvtropes.org")) {
-				const onlineTag = tagsMatching("online")[0];
+				const onlineTag = database.tagsMatching("online")[0];
 				task.addTags([readingTag, onlineTag]);
 				moveIfTitled(task, ["tvtropes.org"], readingProject);
 			}
