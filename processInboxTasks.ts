@@ -204,6 +204,15 @@
 				throw error;
 			}
 		});
+
+			function moveIfTitled(task, disallowedContents, projectName) {
+				if (shouldMoveToProject(task)
+					&& disallowedContents.some(contents => task.name.includes(contents))
+				) {
+					let project = typeof projectName === "string" ? flattenedProjects.byName(projectName) : projectName;
+					database.moveTasks([task], project);
+				}
+			}
 	});
 
 	action.validate = function(selection, sender){
