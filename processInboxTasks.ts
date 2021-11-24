@@ -181,24 +181,17 @@
 			} else if (task.note.includes("youtube.com") || task.note.includes("youtu.be")) {
 				let watchTag = tagsMatching("📺 Watch")[0];
 				task.addTag(watchTag);
-				let taskName = task.name;
-				if (shouldMoveToProject(task)
-					&& !(taskName.includes("youtube.com") || taskName.includes("youtu.be"))
-				) {
-					let youtubeProject = flattenedProjects.byName("📺 YouTube");
-					moveTasks([task], youtubeProject);
-				}
+				moveIfTitled(task, ["youtube.com", "youtu.be"], "📺 YouTube");
 			} else if (task.note.includes("wikipedia.org")) {
 				const readingTag = tagsMatching("🔖 Reading")[0];
 				const onlineTag = tagsMatching("online")[0];
 				task.addTags([readingTag, onlineTag]);
-				let taskName = task.name;
-				if (shouldMoveToProject(task)
-					&& !(taskName.includes("wikipedia.org"))
-				) {
-					let readingProject = flattenedProjects.byName("🔖 Reading");
-					moveTasks([task], readingProject);
-				}
+				moveIfTitled(task, ["wikipedia.org"], "🔖 Reading");
+			} else if (task.note.includes("tvtropes.org")) {
+				const readingTag = tagsMatching("🔖 Reading")[0];
+				const onlineTag = tagsMatching("online")[0];
+				task.addTags([readingTag, onlineTag]);
+				moveIfTitled(task, ["tvtropes.org"], "🔖 Reading");
 			}
 			try {
 				while (task.name.includes("  ")) {
@@ -225,4 +218,13 @@
 
 function shouldMoveToProject(task) {
 	return task.name.length > 1 && !task.project
+}
+
+function moveIfTitled(task, disallowedContents, projectName) {
+	if (shouldMoveToProject(task)
+		&& disallowedContents.some(contents => task.name.includes(contents))
+	) {
+		let project = flattenedProjects.byName(projectName);
+		moveTasks([task], project);
+	}
 }
