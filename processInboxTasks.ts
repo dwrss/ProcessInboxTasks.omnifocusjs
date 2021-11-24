@@ -11,22 +11,22 @@
     "image": "tray"
 }*/
 (() => {
-    var action = new PlugIn.Action(function(selection, sender){
-    	const database = selection.database
+	var action = new PlugIn.Action(function (selection, sender) {
+		const database = selection.database
 		const flattenedProjects = selection.database.flattenedProjects
 		let shoppingProject = flattenedProjects.byName("🛍 Shopping");
 		let groceriesProject = flattenedProjects.byName("🛒 Grocery Shopping");
 		const readingProject = flattenedProjects.byName("🔖 Reading");
-		
+
 		selection.window.perspective = Perspective.BuiltIn.Inbox;
-		
-		const readingTag = tagsMatching('🔖 Reading')[0];
-		selection.database.inbox.forEach(function(task){
+
+		const readingTag = database.tagsMatching('🔖 Reading')[0];
+		selection.database.inbox.forEach(function (task) {
 			if (task.name.startsWith("Waiting")) {
 				let waitingTag = database.tagsMatching("Waiting")[0];
 				task.addTag(waitingTag);
 			}
-			
+
 			if (task.name.startsWith('--')) {
 				let newTasks = Task.byParsingTransportText(task.name, null);
 				if (task.note && task.note.startsWith('--')) {
@@ -205,34 +205,25 @@
 			}
 		});
 
-			function moveIfTitled(task, disallowedContents, projectName) {
-				if (shouldMoveToProject(task)
-					&& disallowedContents.some(contents => task.name.includes(contents))
-				) {
-					let project = typeof projectName === "string" ? flattenedProjects.byName(projectName) : projectName;
-					database.moveTasks([task], project);
-				}
+		function moveIfTitled(task, disallowedContents, projectName) {
+			if (shouldMoveToProject(task)
+				&& disallowedContents.some(contents => task.name.includes(contents))
+			) {
+				let project = typeof projectName === "string" ? flattenedProjects.byName(projectName) : projectName;
+				database.moveTasks([task], project);
 			}
+		}
 	});
 
-	action.validate = function(selection, sender){
+	action.validate = function (selection, sender) {
 		// validation code
 		// selection options: tasks, projects, folders, tags, allObjects
 		return (inbox.length > 0)
 	};
-        
-    return action;
+
+	return action;
 })();
 
 function shouldMoveToProject(task) {
 	return task.name.length > 1 && !task.project
-}
-
-function moveIfTitled(task, disallowedContents, projectName) {
-	if (shouldMoveToProject(task)
-		&& disallowedContents.some(contents => task.name.includes(contents))
-	) {
-		let project = typeof projectName === "string" ? flattenedProjects.byName(projectName) : projectName;
-		moveTasks([task], project);
-	}
 }
