@@ -16,8 +16,11 @@
 		const flattenedProjects = selection.database.flattenedProjects
 		let shoppingProject = flattenedProjects.byName("🛍 Shopping");
 		let groceriesProject = flattenedProjects.byName("🛒 Grocery Shopping");
+		const readingProject = flattenedProjects.byName("🔖 Reading");
 		
 		selection.window.perspective = Perspective.BuiltIn.Inbox;
+		
+		const readingTag = tagsMatching('🔖 Reading')[0];
 		selection.database.inbox.forEach(function(task){
 			if (task.name.startsWith("Waiting")) {
 				let waitingTag = database.tagsMatching("Waiting")[0];
@@ -38,9 +41,7 @@
 				deleteObject(task);
 			} else if (task.name.toLowerCase().includes('#checkredditpost')) {
 				task.name = task.name.replace("#checkredditpost", "");
-				let readingTag = tagsMatching('🔖 Reading')[0];
 				task.addTag(readingTag);
-				let readingProject = flattenedProjects.byName("🔖 Reading");
 				moveTasks([task], readingProject);
 			} else if (task.name.includes("- IKEA") && task.note.includes("https://www.ikea.com")) {
 				let ikeaTag = tagsMatching('Ikea')[0];
@@ -183,15 +184,13 @@
 				task.addTag(watchTag);
 				moveIfTitled(task, ["youtube.com", "youtu.be"], "📺 YouTube");
 			} else if (task.note.includes("wikipedia.org")) {
-				const readingTag = tagsMatching("🔖 Reading")[0];
 				const onlineTag = tagsMatching("online")[0];
 				task.addTags([readingTag, onlineTag]);
-				moveIfTitled(task, ["wikipedia.org"], "🔖 Reading");
+				moveIfTitled(task, ["wikipedia.org"], readingProject);
 			} else if (task.note.includes("tvtropes.org")) {
-				const readingTag = tagsMatching("🔖 Reading")[0];
 				const onlineTag = tagsMatching("online")[0];
 				task.addTags([readingTag, onlineTag]);
-				moveIfTitled(task, ["tvtropes.org"], "🔖 Reading");
+				moveIfTitled(task, ["tvtropes.org"], readingProject);
 			}
 			try {
 				while (task.name.includes("  ")) {
@@ -224,7 +223,7 @@ function moveIfTitled(task, disallowedContents, projectName) {
 	if (shouldMoveToProject(task)
 		&& disallowedContents.some(contents => task.name.includes(contents))
 	) {
-		let project = flattenedProjects.byName(projectName);
+		let project = typeof projectName === "string" ? flattenedProjects.byName(projectName) : projectName;
 		moveTasks([task], project);
 	}
 }
