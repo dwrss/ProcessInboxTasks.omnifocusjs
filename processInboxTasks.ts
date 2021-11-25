@@ -207,7 +207,7 @@
 
 		function moveIfTitled(task, disallowedContents, projectName) {
 			if (shouldMoveToProject(task)
-				&& disallowedContents.some(contents => task.name.includes(contents))
+				&& !disallowedContents.some(contents => task.name.includes(contents))
 			) {
 				let project = typeof projectName === "string" ? flattenedProjects.byName(projectName) : projectName;
 				database.moveTasks([task], project);
