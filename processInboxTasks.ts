@@ -137,7 +137,7 @@
 				    "Set time on task [Print "+task.name+"] in OmniFocus",
 				    "Print " + task.name
 				].forEach(function (childTask){
-					let newTask = new Task(childTask);
+					let newTask = new Task(childTask, null);
 					newTask.note = task.note;
 					childTasks.push(newTask);
 				});
